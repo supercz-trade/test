@@ -1884,13 +1884,7 @@
 
 
 
-/* ================================================================
-   TRADE HEADER — Mobile layout
-   ================================================================ */
 
-MOBILE STATS BLOCK (tc-stats-mobile)
-   Desktop: hidden. Mobile: kanan header — Price/MCap/Vol + chip row
-════════════════════════════════════════════════════════════════ */
 
 .tc-stats-mobile { display: none; }
 
