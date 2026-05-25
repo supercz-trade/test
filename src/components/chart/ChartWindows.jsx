@@ -30,8 +30,8 @@ import { calcMA, calcEMA, calcBOLL, calcSARFull, calcSupertrend } from "./chartI
 
 import HeaderChart, { DEFAULT_DISPLAY_OPTIONS } from "./HeaderChart";
 import IndicatorModal, { DEFAULT_INDICATOR_CONFIG } from "./IndicatorModal";
-import BottomChart from "./BottomChart";
-import SideChart from "./SideChart";
+import BottomChart from "./bottomChart";
+import SideChart from "./sideChart";
 import SubPane from "./SubPane";
 
 // ================================================================
