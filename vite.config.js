@@ -3,17 +3,12 @@ import react from '@vitejs/plugin-react';
 import path from 'path';
 
 export default defineConfig({
-  // [ADDED]
-  base: '/test/',
-
   plugins: [react()],
-
   resolve: {
     alias: {
       '@': path.resolve(__dirname, './src'),
     },
   },
-
   css: {
     preprocessorOptions: {
       css: {
@@ -21,9 +16,8 @@ export default defineConfig({
       },
     },
   },
-
   server: {
-    host: true,
-    allowedHosts: 'all',
-  },
+  host: "0.0.0.0",
+  allowedHosts: true,
+},
 });
