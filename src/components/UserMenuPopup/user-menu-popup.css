@@ -1,0 +1,412 @@
+/* ================================================================
+   User Menu Popup - SwanFi Style (Professional)
+   ================================================================ */
+
+/* ── Container ───────────────────────────────────────────────── */
+.um-popup {
+  position: fixed;
+  z-index: 9999;
+  width: 280px;
+  background: var(--bg-elevated);
+  border: 1px solid var(--border-default);
+  border-radius: var(--radius-xl);
+  box-shadow: var(--shadow-lg), var(--shadow-glow);
+  backdrop-filter: blur(2px);
+  animation: um-slide-in 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+  transform-origin: top right;
+}
+
+@keyframes um-slide-in {
+  from {
+    opacity: 0;
+    transform: scale(0.96) translateY(-8px);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1) translateY(0);
+  }
+}
+
+/* ── Header Section ──────────────────────────────────────────── */
+.um-header {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  padding: var(--space-4) var(--space-4) var(--space-2) var(--space-4);
+  border-bottom: 1px solid var(--border-subtle);
+  margin-bottom: var(--space-2);
+}
+
+.um-avatar {
+  width: 40px;
+  height: 40px;
+  border-radius: var(--radius-full);
+  background: linear-gradient(135deg, var(--color-primary) 0%, var(--swan-orange) 100%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  box-shadow: 0 0 0 2px var(--bg-surface), 0 0 0 4px var(--border-subtle);
+}
+
+.um-avatar svg {
+  color: var(--text-inverse);
+  width: 20px;
+  height: 20px;
+}
+
+.um-header-info {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.um-username {
+  font-size: 0.875rem;
+  font-weight: 700;
+  color: var(--text-primary);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  letter-spacing: -0.2px;
+}
+
+.um-wallet-addr {
+  font-size: 0.6875rem;
+  font-weight: 500;
+  font-family: var(--font-mono);
+  color: var(--text-muted);
+  background: var(--bg-overlay);
+  display: inline-block;
+  padding: 2px 6px;
+  border-radius: var(--radius-sm);
+  width: fit-content;
+}
+
+/* ── 2FA Pill ───────────────────────────────────────────────── */
+.um-2fa-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  padding: 4px 10px;
+  border-radius: 30px;
+  font-size: 0.6875rem;
+  font-weight: 700;
+  font-family: var(--font-sans);
+  transition: all 0.2s ease;
+  cursor: pointer;
+  background: var(--bg-overlay);
+  border: 1px solid transparent;
+}
+
+.um-2fa-pill--on {
+  background: rgba(34, 197, 94, 0.12);
+  border-color: rgba(34, 197, 94, 0.3);
+  color: #22c55e;
+}
+
+.um-2fa-pill--off {
+  background: rgba(245, 166, 35, 0.1);
+  border-color: rgba(245, 166, 35, 0.25);
+  color: var(--color-primary);
+}
+
+.um-2fa-pill--off:hover {
+  background: rgba(245, 166, 35, 0.2);
+  border-color: var(--color-primary);
+  transform: scale(1.02);
+}
+
+/* ── Balance Card ───────────────────────────────────────────── */
+.um-balance {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background: var(--bg-surface);
+  margin: 0 var(--space-3) var(--space-3) var(--space-3);
+  padding: var(--space-3) var(--space-3);
+  border-radius: var(--radius-lg);
+  border: 1px solid var(--border-subtle);
+  box-shadow: var(--shadow-sm);
+}
+
+.um-balance-left {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.um-balance-label {
+  font-size: 0.625rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  color: var(--text-muted);
+}
+
+.um-balance-bnb {
+  font-size: 1rem;
+  font-weight: 800;
+  font-family: var(--font-mono);
+  color: var(--text-primary);
+  line-height: 1.2;
+}
+
+.um-balance-right {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 6px;
+}
+
+.um-balance-usd {
+  font-size: 0.8125rem;
+  font-weight: 500;
+  color: var(--text-secondary);
+}
+
+.um-balance-bar {
+  width: 70px;
+  height: 3px;
+  background: var(--bg-overlay);
+  border-radius: 4px;
+  overflow: hidden;
+}
+
+.um-balance-bar-fill {
+  height: 100%;
+  background: linear-gradient(90deg, var(--color-primary), var(--swan-gold));
+  border-radius: 4px;
+  transition: width 0.3s ease;
+}
+
+/* ── Action Buttons ─────────────────────────────────────────── */
+.um-actions {
+  display: flex;
+  gap: var(--space-2);
+  padding: 0 var(--space-3) var(--space-3) var(--space-3);
+}
+
+.um-action-btn {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+  padding: 10px 6px;
+  border-radius: var(--radius-md);
+  background: var(--bg-overlay);
+  border: 1px solid var(--border-subtle);
+  color: var(--text-secondary);
+  font-size: 0.6875rem;
+  font-weight: 600;
+  font-family: var(--font-sans);
+  transition: all 0.2s;
+  cursor: pointer;
+}
+
+.um-action-btn svg {
+  width: 16px;
+  height: 16px;
+  stroke-width: 1.8;
+}
+
+.um-action--funds:hover {
+  background: rgba(255, 184, 0, 0.12);
+  border-color: rgba(255, 184, 0, 0.4);
+  color: var(--color-primary);
+  transform: translateY(-1px);
+}
+
+.um-action--withdraw:hover {
+  background: rgba(96, 165, 250, 0.12);
+  border-color: rgba(96, 165, 250, 0.4);
+  color: #60a5fa;
+  transform: translateY(-1px);
+}
+
+/* Hide Add Funds on desktop by default (show only on mobile) */
+.um-action--mobile-only {
+  display: none;
+}
+
+/* ── Dividers ───────────────────────────────────────────────── */
+.um-divider {
+  height: 1px;
+  background: linear-gradient(90deg, transparent, var(--border-default), transparent);
+  margin: var(--space-2) var(--space-3);
+}
+
+/* ── Menu Items List ───────────────────────────────────────── */
+.um-menu {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  padding: 0 var(--space-2) var(--space-2) var(--space-2);
+}
+
+.um-item {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  width: 100%;
+  padding: 8px var(--space-3);
+  border-radius: var(--radius-md);
+  background: transparent;
+  border: none;
+  color: var(--text-secondary);
+  font-size: 0.8125rem;
+  font-weight: 500;
+  font-family: var(--font-sans);
+  cursor: pointer;
+  transition: all 0.15s ease;
+  text-align: left;
+}
+
+.um-item:hover {
+  background: var(--bg-hover);
+  color: var(--text-primary);
+  transform: translateX(2px);
+}
+
+.um-item-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 28px;
+  height: 28px;
+  border-radius: var(--radius-md);
+  background: var(--bg-overlay);
+  border: 1px solid var(--border-subtle);
+  transition: all 0.2s;
+  flex-shrink: 0;
+  color: var(--text-muted);
+}
+
+.um-item:hover .um-item-icon {
+  background: var(--bg-elevated);
+  border-color: var(--color-primary);
+  color: var(--color-primary);
+}
+
+.um-item-label {
+  flex: 1;
+}
+
+.um-item-arrow {
+  opacity: 0;
+  transform: translateX(-4px);
+  transition: all 0.2s;
+  color: var(--text-muted);
+}
+
+.um-item:hover .um-item-arrow {
+  opacity: 1;
+  transform: translateX(0);
+}
+
+/* Variant specific hover icons */
+.um-item--referral:hover .um-item-icon {
+  color: #22c55e;
+  border-color: #22c55e;
+  background: rgba(34, 197, 94, 0.08);
+}
+.um-item--export:hover .um-item-icon {
+  color: #60a5fa;
+  border-color: #60a5fa;
+  background: rgba(96, 165, 250, 0.08);
+}
+.um-item--dev:hover .um-item-icon {
+  color: #8b5cf6;
+  border-color: #8b5cf6;
+  background: rgba(139, 92, 246, 0.08);
+}
+.um-item--telegram:hover .um-item-icon {
+  color: #229ED9;
+  border-color: #229ED9;
+  background: rgba(34, 157, 217, 0.08);
+}
+.um-item--danger {
+  color: var(--color-danger);
+}
+.um-item--danger:hover {
+  background: rgba(239, 68, 68, 0.08);
+  color: var(--color-danger);
+}
+.um-item--danger .um-item-icon {
+  background: rgba(239, 68, 68, 0.06);
+  border-color: rgba(239, 68, 68, 0.2);
+  color: var(--color-danger);
+}
+.um-item--danger:hover .um-item-icon {
+  background: rgba(239, 68, 68, 0.12);
+  border-color: var(--color-danger);
+}
+
+/* ── Mobile only items (hidden on desktop) ─────────────────── */
+.um-item--mobile-only {
+  display: none;
+}
+
+/* ── Responsive (Mobile) ───────────────────────────────────── */
+@media (max-width: 768px) {
+  .um-popup {
+    width: calc(100vw - 32px);
+    max-width: 340px;
+    right: 16px;
+    left: auto !important;
+    animation: um-slide-in-mobile 0.2s ease;
+  }
+  
+  @keyframes um-slide-in-mobile {
+    from {
+      opacity: 0;
+      transform: translateY(-10px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  .um-action--mobile-only {
+    display: flex;
+  }
+
+  .um-actions {
+    grid-template-columns: 1fr 1fr;
+    gap: var(--space-2);
+  }
+
+  .um-item--mobile-only {
+    display: flex;
+  }
+
+  /* Adjust spacing */
+  .um-header {
+    padding: var(--space-3);
+  }
+  .um-balance {
+    margin: 0 var(--space-2) var(--space-2) var(--space-2);
+  }
+  .um-actions {
+    padding: 0 var(--space-2) var(--space-2) var(--space-2);
+  }
+}
+
+/* ── Accessibility & reduced motion ───────────────────────── */
+@media (prefers-reduced-motion: reduce) {
+  .um-popup,
+  .um-item,
+  .um-action-btn,
+  .um-2fa-pill {
+    animation: none;
+    transition: none;
+  }
+  .um-item-arrow {
+    opacity: 0;
+    transform: none;
+  }
+}

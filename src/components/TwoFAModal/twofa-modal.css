@@ -1,0 +1,700 @@
+/* src/components/TwoFAModal/twofa-modal.css */
+
+/* ── Overlay ───────────────────────────────────────── */
+.tfa-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 10000;
+  background: rgba(0, 0, 0, 0.8);
+  backdrop-filter: blur(8px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: var(--space-4);
+  animation: tfa-fade-in 0.2s ease-out;
+}
+
+@keyframes tfa-fade-in {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+
+/* ── Modal Container ───────────────────────────────── */
+.tfa-modal {
+  width: 100%;
+  max-width: 520px;
+  max-height: 85vh;
+  overflow-y: auto;
+  background: var(--bg-elevated);
+  border-radius: var(--radius-xl);
+  box-shadow: var(--shadow-md), var(--shadow-glow);
+  animation: tfa-slide-up 0.3s cubic-bezier(0.34, 1.2, 0.64, 1);
+  position: relative;
+  border: 1px solid var(--border-default);
+}
+
+.tfa-modal::-webkit-scrollbar {
+  width: 4px;
+}
+.tfa-modal::-webkit-scrollbar-track {
+  background: var(--bg-surface);
+}
+.tfa-modal::-webkit-scrollbar-thumb {
+  background: var(--swan-gray);
+  border-radius: var(--radius-full);
+}
+.tfa-modal::-webkit-scrollbar-thumb:hover {
+  background: var(--color-primary);
+}
+
+@keyframes tfa-slide-up {
+  from {
+    opacity: 0;
+    transform: translateY(20px) scale(0.96);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+/* ── Header ───────────────────────────────────────── */
+.tfa-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: var(--space-6) var(--space-6) 0 var(--space-6);
+  margin-bottom: var(--space-2);
+}
+
+.tfa-header-left {
+  display: flex;
+  align-items: center;
+  gap: var(--space-4);
+}
+
+.tfa-header-icon {
+  width: 48px;
+  height: 48px;
+  border-radius: var(--radius-lg);
+  background: var(--bg-hover);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid var(--border-subtle);
+}
+.tfa-header-icon svg {
+  color: var(--color-primary);
+  stroke-width: 1.5;
+}
+
+.tfa-header-text {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+.tfa-title {
+  font-size: 1.125rem;
+  font-weight: 700;
+  color: var(--text-primary);
+  letter-spacing: -0.3px;
+}
+.tfa-subtitle {
+  font-size: 0.75rem;
+  color: var(--text-secondary);
+}
+
+/* ── Close Button ─────────────────────────────────── */
+.tfa-close {
+  width: 36px;
+  height: 36px;
+  border-radius: var(--radius-md);
+  background: var(--bg-overlay);
+  color: var(--text-muted);
+  transition: all 0.2s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.tfa-close:hover {
+  background: var(--bg-hover);
+  color: var(--color-primary);
+  transform: scale(1.02);
+}
+
+/* ── Steps (Stepper) ──────────────────────────────── */
+.tfa-steps {
+  padding: var(--space-5) var(--space-6);
+  border-bottom: 1px solid var(--border-subtle);
+}
+.tfa-stepper {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  position: relative;
+}
+.tfa-step {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--space-2);
+  flex: 1;
+  z-index: 2;
+}
+.tfa-step-circle {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background: var(--bg-surface);
+  border: 2px solid var(--border-subtle);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.875rem;
+  font-weight: 700;
+  color: var(--text-muted);
+  transition: all 0.3s ease;
+}
+.tfa-step--active .tfa-step-circle {
+  background: var(--color-primary);
+  border-color: var(--color-primary);
+  color: var(--text-inverse);
+  box-shadow: 0 0 0 4px var(--bg-hover);
+}
+.tfa-step--done .tfa-step-circle {
+  background: var(--color-success);
+  border-color: var(--color-success);
+  color: white;
+}
+.tfa-step--done .tfa-step-circle svg {
+  color: white;
+}
+.tfa-step-label {
+  font-size: 0.6875rem;
+  font-weight: 600;
+  color: var(--text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+.tfa-step--active .tfa-step-label {
+  color: var(--color-primary);
+  font-weight: 700;
+}
+.tfa-step-line {
+  flex: 1;
+  height: 2px;
+  background: var(--border-subtle);
+  margin: 0 var(--space-2);
+  position: relative;
+  top: -20px;
+  z-index: 1;
+}
+
+/* ── Body ─────────────────────────────────────────── */
+.tfa-body {
+  padding: var(--space-6);
+}
+
+/* Instruction text */
+.tfa-instruction {
+  font-size: 0.875rem;
+  color: var(--text-secondary);
+  line-height: 1.6;
+  margin-bottom: var(--space-5);
+  text-align: center;
+}
+
+/* ── Apps Grid ────────────────────────────────────── */
+.tfa-apps-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+  gap: var(--space-3);
+  margin-bottom: var(--space-5);
+}
+.tfa-app-card {
+  background: var(--bg-surface);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-lg);
+  padding: var(--space-4) var(--space-3);
+  transition: all 0.2s ease;
+  cursor: pointer;
+  text-align: center;
+}
+.tfa-app-card:hover {
+  border-color: var(--color-primary);
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-sm);
+}
+.tfa-app-icon {
+  margin-bottom: var(--space-3);
+  color: var(--color-primary);
+  display: flex;
+  justify-content: center;
+}
+.tfa-app-name {
+  font-size: 0.8125rem;
+  font-weight: 700;
+  color: var(--text-primary);
+  margin-bottom: var(--space-2);
+}
+.tfa-app-links {
+  display: flex;
+  justify-content: center;
+  gap: var(--space-4);
+}
+.tfa-app-links a {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 36px;
+  height: 36px;
+  border-radius: var(--radius-md);
+  background: var(--bg-elevated);
+  border: 1px solid var(--border-subtle);
+  color: var(--text-secondary);
+  transition: all 0.2s;
+}
+.tfa-app-links a:hover {
+  background: var(--bg-hover);
+  border-color: var(--color-primary);
+  color: var(--color-primary);
+  transform: translateY(-2px);
+}
+.tfa-app-links span {
+  display: none;
+}
+
+/* ── How It Works Section ─────────────────────────── */
+.tfa-how-it-works {
+  margin: var(--space-5) 0 var(--space-2);
+  border-top: 1px solid var(--border-subtle);
+  padding-top: var(--space-5);
+}
+.tfa-how-it-works-toggle {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  padding: var(--space-3) var(--space-4);
+  background: var(--bg-surface);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-lg);
+  font-size: 0.8125rem;
+  font-weight: 600;
+  color: var(--text-primary);
+  transition: all 0.2s;
+}
+.tfa-how-it-works-toggle:hover {
+  background: var(--bg-overlay);
+  border-color: var(--color-primary);
+  transform: translateY(-1px);
+}
+.tfa-how-icon {
+  color: var(--color-primary);
+}
+.tfa-how-arrow {
+  margin-left: auto;
+  transition: transform 0.3s;
+  color: var(--text-muted);
+}
+.tfa-how-arrow.expanded {
+  transform: rotate(180deg);
+}
+.tfa-how-content {
+  margin-top: var(--space-4);
+  animation: tfa-slide-down 0.3s ease;
+}
+@keyframes tfa-slide-down {
+  from { opacity: 0; transform: translateY(-10px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+.tfa-how-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: var(--space-3);
+  margin-bottom: var(--space-5);
+}
+.tfa-how-card {
+  text-align: center;
+  padding: var(--space-4) var(--space-2);
+  background: var(--bg-surface);
+  border-radius: var(--radius-lg);
+  border: 1px solid var(--border-subtle);
+  transition: all 0.2s;
+}
+.tfa-how-card:hover {
+  transform: translateY(-2px);
+  border-color: var(--color-primary);
+}
+.tfa-how-card-icon {
+  margin-bottom: var(--space-3);
+  color: var(--color-primary);
+  display: flex;
+  justify-content: center;
+}
+.tfa-how-card-title {
+  font-size: 0.75rem;
+  font-weight: 700;
+  color: var(--text-primary);
+  margin-bottom: 4px;
+}
+.tfa-how-card-desc {
+  font-size: 0.625rem;
+  color: var(--text-muted);
+  line-height: 1.4;
+}
+.tfa-how-benefits {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+  padding: var(--space-4);
+  background: var(--bg-hover);
+  border-radius: var(--radius-lg);
+  border: 1px solid var(--border-subtle);
+}
+.tfa-benefit-item {
+  display: flex;
+  gap: var(--space-3);
+  align-items: flex-start;
+}
+.tfa-benefit-icon {
+  flex-shrink: 0;
+  color: var(--color-primary);
+}
+.tfa-benefit-item strong {
+  display: block;
+  font-size: 0.8125rem;
+  color: var(--text-primary);
+  margin-bottom: 2px;
+}
+.tfa-benefit-item p {
+  font-size: 0.6875rem;
+  color: var(--text-secondary);
+  margin: 0;
+}
+
+/* ── QR Code Section ──────────────────────────────── */
+.tfa-qr-wrap {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: var(--space-8);
+  background: var(--bg-surface);
+  border-radius: var(--radius-xl);
+  margin: var(--space-5) 0;
+  border: 1px solid var(--border-subtle);
+}
+.tfa-qr-skeleton {
+  width: 180px;
+  height: 180px;
+  border-radius: var(--radius-lg);
+  background: linear-gradient(90deg, var(--border-subtle) 25%, var(--bg-elevated) 50%, var(--border-subtle) 75%);
+  background-size: 200% 100%;
+  animation: tfa-skeleton-loading 1.5s infinite;
+}
+@keyframes tfa-skeleton-loading {
+  0% { background-position: 200% 0; }
+  100% { background-position: -200% 0; }
+}
+.tfa-qr-img {
+  width: 180px;
+  height: 180px;
+  border-radius: var(--radius-lg);
+  background: white;
+  padding: 8px;
+  box-shadow: var(--shadow-sm);
+}
+.tfa-error-state {
+  text-align: center;
+  color: var(--color-danger);
+}
+.tfa-error-state svg {
+  margin-bottom: var(--space-3);
+}
+.tfa-copy-secret {
+  margin-top: var(--space-4);
+  padding: var(--space-2) var(--space-4);
+  background: var(--bg-elevated);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-md);
+  font-size: 0.75rem;
+  font-weight: 500;
+  color: var(--text-secondary);
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2);
+  transition: all 0.2s;
+}
+.tfa-copy-secret:hover {
+  background: var(--bg-hover);
+  border-color: var(--color-primary);
+  color: var(--color-primary);
+}
+
+/* Tip */
+.tfa-tip {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  padding: var(--space-3) var(--space-4);
+  background: var(--bg-hover);
+  border-radius: var(--radius-lg);
+  font-size: 0.75rem;
+  color: var(--text-secondary);
+  margin: var(--space-4) 0;
+  border-left: 3px solid var(--color-primary);
+}
+.tfa-tip-icon {
+  color: var(--color-primary);
+  flex-shrink: 0;
+}
+
+/* ── OTP Input ────────────────────────────────────── */
+.tfa-otp-row {
+  display: flex;
+  justify-content: center;
+  gap: var(--space-3);
+  margin: var(--space-6) 0 var(--space-5);
+}
+.tfa-otp-input {
+  width: 56px;
+  height: 60px;
+  border-radius: var(--radius-lg);
+  border: 2px solid var(--border-subtle);
+  background: var(--bg-surface);
+  color: var(--text-primary);
+  font-size: 1.5rem;
+  font-weight: 700;
+  text-align: center;
+  font-family: var(--font-mono);
+  transition: all 0.2s;
+}
+.tfa-otp-input:focus {
+  border-color: var(--color-primary);
+  box-shadow: 0 0 0 3px var(--bg-hover);
+  transform: scale(1.02);
+}
+.tfa-code-timer {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-2);
+  font-size: 0.75rem;
+  color: var(--text-muted);
+  padding: var(--space-2);
+  background: var(--bg-surface);
+  border-radius: var(--radius-md);
+  margin: var(--space-3) 0;
+}
+.tfa-timer-icon {
+  color: var(--color-primary);
+}
+
+/* ── Buttons ──────────────────────────────────────── */
+.tfa-actions {
+  display: flex;
+  gap: var(--space-3);
+  margin-top: var(--space-6);
+}
+.tfa-btn-primary {
+  flex: 1;
+  height: 48px;
+  border-radius: var(--radius-lg);
+  background: linear-gradient(135deg, var(--color-primary), var(--swan-yellow-dark));
+  color: var(--text-inverse);
+  font-size: 0.875rem;
+  font-weight: 700;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-2);
+  transition: all 0.2s;
+  position: relative;
+  overflow: hidden;
+}
+.tfa-btn-primary::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+  transition: left 0.5s;
+}
+.tfa-btn-primary:hover::before {
+  left: 100%;
+}
+.tfa-btn-primary:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(255, 184, 0, 0.3);
+}
+.tfa-btn-primary:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+  transform: none;
+}
+.tfa-btn-primary:disabled::before {
+  display: none;
+}
+.tfa-btn-ghost {
+  height: 48px;
+  padding: 0 var(--space-5);
+  border-radius: var(--radius-lg);
+  border: 1px solid var(--border-subtle);
+  background: transparent;
+  color: var(--text-secondary);
+  font-size: 0.875rem;
+  font-weight: 600;
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2);
+  transition: all 0.2s;
+}
+.tfa-btn-ghost:hover {
+  background: var(--bg-surface);
+  border-color: var(--color-primary);
+  color: var(--color-primary);
+  transform: translateY(-1px);
+}
+
+/* ── Error Message ────────────────────────────────── */
+.tfa-error {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-2);
+  background: rgba(255, 77, 77, 0.1);
+  border: 1px solid rgba(255, 77, 77, 0.3);
+  border-radius: var(--radius-lg);
+  padding: var(--space-3) var(--space-4);
+  color: var(--color-danger);
+  font-size: 0.75rem;
+  margin-top: var(--space-4);
+  animation: tfa-shake 0.3s ease;
+}
+@keyframes tfa-shake {
+  0%,100% { transform: translateX(0); }
+  25% { transform: translateX(-5px); }
+  75% { transform: translateX(5px); }
+}
+
+/* ── Success State ────────────────────────────────── */
+.tfa-body--success {
+  text-align: center;
+  padding: var(--space-12) var(--space-6);
+}
+.tfa-success-ring {
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+  background: rgba(34, 197, 94, 0.1);
+  border: 2px solid var(--color-success);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto var(--space-6);
+  animation: tfa-success-pop 0.5s cubic-bezier(0.34, 1.2, 0.64, 1);
+}
+@keyframes tfa-success-pop {
+  0% { transform: scale(0); opacity: 0; }
+  50% { transform: scale(1.1); }
+  100% { transform: scale(1); opacity: 1; }
+}
+.tfa-success-ring svg {
+  color: var(--color-success);
+}
+.tfa-success-title {
+  font-size: 1.125rem;
+  font-weight: 700;
+  color: var(--color-success);
+  margin-bottom: var(--space-2);
+}
+.tfa-success-message {
+  font-size: 0.8125rem;
+  color: var(--text-secondary);
+  margin-bottom: var(--space-5);
+}
+.tfa-success-tip {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-2);
+  padding: var(--space-3) var(--space-4);
+  background: var(--bg-hover);
+  border-radius: var(--radius-lg);
+  font-size: 0.75rem;
+  color: var(--text-secondary);
+  margin-top: var(--space-5);
+}
+.tfa-success-tip svg {
+  color: var(--color-primary);
+}
+
+/* ── Responsive ───────────────────────────────────── */
+@media (max-width: 640px) {
+  .tfa-modal {
+    max-width: 95vw;
+  }
+  .tfa-header {
+    padding: var(--space-4) var(--space-4) 0 var(--space-4);
+  }
+  .tfa-body {
+    padding: var(--space-4);
+  }
+  .tfa-otp-input {
+    width: 48px;
+    height: 52px;
+    font-size: 1.25rem;
+  }
+  .tfa-how-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+@media (max-width: 480px) {
+  .tfa-otp-row {
+    gap: var(--space-2);
+  }
+  .tfa-otp-input {
+    width: 42px;
+    height: 48px;
+  }
+  .tfa-actions {
+    flex-direction: column-reverse;
+  }
+  .tfa-btn-primary, .tfa-btn-ghost {
+    width: 100%;
+  }
+  .tfa-how-grid {
+    grid-template-columns: 1fr;
+  }
+  .tfa-how-card {
+    display: flex;
+    align-items: center;
+    text-align: left;
+    gap: var(--space-3);
+  }
+  .tfa-how-card-icon {
+    margin-bottom: 0;
+  }
+}
+@media (max-width: 360px) {
+  .tfa-otp-input {
+    width: 38px;
+    height: 44px;
+  }
+}
+
+/* Accessibility & reduced motion */
+@media (prefers-reduced-motion: reduce) {
+  .tfa-modal,
+  .tfa-overlay,
+  .tfa-step-circle,
+  .tfa-how-arrow,
+  .tfa-how-content,
+  .tfa-success-ring,
+  .tfa-btn-primary::before {
+    animation: none;
+    transition: none;
+  }
+}

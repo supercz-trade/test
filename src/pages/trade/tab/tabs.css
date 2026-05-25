@@ -1,0 +1,337 @@
+﻿/* ================================================================
+   tabs.css — SwanFi trade tabs (Activity, Holders, TopTraders, Position, WalletDetail)
+   ================================================================ */
+
+   @import "./WalletDetailPanel.css";
+
+/* ── Shared table base ────────────────────────────────────────── */
+.tr-table-scroll {
+  flex: 1; overflow-y: auto;
+  -ms-overflow-style: none; scrollbar-width: none;
+}
+.tr-table-scroll::-webkit-scrollbar { display: none; }
+
+.tr-table {
+  width: 100%; border-collapse: separate; border-spacing: 0;
+  font-size: 12px; font-family: var(--font-mono);
+}
+.tr-table thead tr {
+  position: sticky; top: 0; z-index: 10;
+  background: var(--bg-base);
+}
+.tr-table th {
+  padding: 7px 14px;
+  font-size: 9px; font-weight: 700; letter-spacing: 0.1em;
+  color: var(--text-muted); text-transform: uppercase;
+  border-bottom: 1px solid var(--border-subtle);
+  white-space: nowrap; user-select: none; text-align: left;
+}
+.tr-table th:first-child { padding-left: 18px; }
+.tr-table td {
+  padding: 8px 14px;
+  border-bottom: 1px solid rgba(255,255,255,0.03);
+  vertical-align: middle; white-space: nowrap;
+  color: var(--text-secondary); font-size: 12px;
+}
+.tr-table td:first-child { padding-left: 18px; color: var(--text-muted); }
+
+/* ── New row animation ────────────────────────────────────────── */
+@keyframes tr-row-in {
+  from { opacity: 0; background: rgba(255,184,0,0.06); }
+  to   { opacity: 1; background: transparent; }
+}
+.tr-tx-row--new { animation: tr-row-in 0.6s ease forwards; }
+
+/* ── Transaction rows ─────────────────────────────────────────── */
+.tr-tx-row { transition: background 0.08s; cursor: default; }
+.tr-tx-row:hover { background: rgba(255,255,255,0.025); }
+.tr-tx-row--buy  { box-shadow: inset 3px 0 0 rgba(38,166,154,0.5); }
+.tr-tx-row--sell { box-shadow: inset 3px 0 0 rgba(239,83,80,0.5); }
+
+/* ── Type badge ───────────────────────────────────────────────── */
+.tr-type-badge {
+  display: inline-flex; align-items: center;
+  font-size: 10px; font-weight: 700; letter-spacing: 0.04em;
+  padding: 2px 10px; border-radius: 20px;
+  min-width: 40px; justify-content: center;
+}
+.tr-type-badge--buy  { background: rgba(38,166,154,0.1); color: #26a69a; border: 1px solid rgba(38,166,154,0.2); }
+.tr-type-badge--sell { background: rgba(239,83,80,0.1);  color: #ef5350; border: 1px solid rgba(239,83,80,0.2); }
+
+/* ── Holder tags ──────────────────────────────────────────────── */
+.tr-holder-tag         { font-size: 9px; font-weight: 800; padding: 1px 5px; border-radius: 10px; }
+.tr-holder-tag--dev    { background: rgba(239,68,68,0.15);  color: #f87171; }
+.tr-holder-tag--paper  { background: rgba(251,191,36,0.12); color: #fbbf24; }
+
+/* ── Percent bar ──────────────────────────────────────────────── */
+.tr-pct-bar-wrap { display: flex; align-items: center; gap: 6px; }
+.tr-pct-bar-bg   { width: 60px; height: 4px; border-radius: 2px; background: rgba(255,255,255,0.06); flex-shrink: 0; overflow: hidden; }
+.tr-pct-bar-fill { height: 100%; border-radius: 2px; background: linear-gradient(90deg, rgba(255,184,0,0.6), rgba(255,184,0,0.2)); }
+
+/* ── Status badges ────────────────────────────────────────────── */
+.tr-status        { display: inline-block; font-size: 9px; font-weight: 700; padding: 2px 8px; border-radius: 10px; }
+.tr-status--hold  { background: rgba(38,166,154,0.12); color: #26a69a; }
+.tr-status--exit  { background: rgba(255,255,255,0.07); color: var(--text-muted); }
+.tr-status--paper { background: rgba(251,191,36,0.12);  color: #fbbf24; }
+
+/* ── Filter addr button ───────────────────────────────────────── */
+.tr-filter-addr-btn:hover { color: #f97316 !important; background: rgba(249,115,22,0.1) !important; }
+
+/* ================================================================
+   ACTIVITY TAB — Mobile card layout
+   ================================================================ */
+.tr-tx-card-list { display: none; flex-direction: column; }
+
+@media (max-width: 640px) {
+  .tr-activity-table.tr-table-scroll .tr-table,
+  .tr-holders-table.tr-table-scroll .tr-table,
+  .tr-toptraders-table.tr-table-scroll .tr-table,
+  .tr-mypos-table.tr-table-scroll .tr-table { display: none; }
+  .tr-tx-card-list { display: flex; }
+
+  .tr-tx-card {
+    display: flex; align-items: flex-start; gap: 10px;
+    padding: 10px 12px;
+    border-bottom: 1px solid rgba(255,255,255,0.035);
+    transition: background 0.08s;
+  }
+  .tr-tx-card:hover  { background: rgba(255,255,255,0.025); }
+  .tr-tx-card--buy   { box-shadow: inset 3px 0 0 rgba(38,166,154,0.5); }
+  .tr-tx-card--sell  { box-shadow: inset 3px 0 0 rgba(239,83,80,0.5); }
+  .tr-tx-card--new   { animation: tr-row-in 0.6s ease forwards; }
+  .tr-tx-card-badge  { flex-shrink: 0; margin-top: 1px; }
+  .tr-tx-card-body   { flex: 1; min-width: 0; display: flex; flex-direction: column; gap: 3px; }
+  .tr-tx-card-row    { display: flex; align-items: center; gap: 6px; flex-wrap: nowrap; }
+  .tr-tx-card-lbl    { font-size: 9px; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.05em; flex-shrink: 0; }
+  .tr-tx-card-val    { font-size: 11px; font-weight: 600; font-family: var(--font-mono); color: var(--text-secondary); white-space: nowrap; }
+  .tr-tx-card-val--pos { color: #26a69a; }
+  .tr-tx-card-val--neg { color: #ef5350; }
+  .tr-tx-card-sep    { width: 1px; height: 10px; background: var(--border-subtle); flex-shrink: 0; }
+  .tr-tx-card-addr   { display: flex; align-items: center; gap: 4px; margin-top: 1px; }
+  .tr-tx-card-age    { font-size: 10px; color: var(--text-muted); white-space: nowrap; flex-shrink: 0; margin-top: 1px; }
+}
+
+/* ================================================================
+   HOLDERS TAB — Mobile card layout
+   ================================================================ */
+.tr-holder-card-list { display: none; flex-direction: column; }
+
+@media (max-width: 640px) {
+  .tr-holder-card-list { display: flex; }
+  .tr-holder-card {
+    display: flex; align-items: flex-start; gap: 10px;
+    padding: 10px 12px;
+    border-bottom: 1px solid rgba(255,255,255,0.035);
+    transition: background 0.1s;
+  }
+  .tr-holder-card:hover { background: rgba(255,255,255,0.025); }
+  .tr-holder-card-rank  { font-size: 11px; color: var(--text-muted); font-weight: 600; min-width: 18px; flex-shrink: 0; margin-top: 2px; text-align: center; }
+  .tr-holder-card-body  { flex: 1; min-width: 0; display: flex; flex-direction: column; gap: 3px; }
+  .tr-holder-card-row   { display: flex; align-items: center; gap: 6px; flex-wrap: nowrap; }
+  .tr-holder-card-lbl   { font-size: 9px; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.05em; flex-shrink: 0; }
+  .tr-holder-card-val   { font-size: 11px; font-weight: 600; font-family: var(--font-mono); color: var(--text-secondary); white-space: nowrap; }
+  .tr-holder-card-val--pos { color: #26a69a; }
+  .tr-holder-card-val--neg { color: #ef5350; }
+  .tr-holder-card-sep   { width: 1px; height: 10px; background: var(--border-subtle); flex-shrink: 0; }
+  .tr-holder-card-addr  { display: flex; align-items: center; gap: 4px; margin-top: 1px; }
+}
+
+/* ================================================================
+   TOP TRADERS TAB — Mobile card layout
+   ================================================================ */
+.tr-vol-col { display: flex; flex-direction: column; gap: 1px; }
+.tr-rank    { font-size: 13px; }
+
+.tr-trader-card-list { display: none; flex-direction: column; }
+
+@media (max-width: 640px) {
+  .tr-trader-card-list { display: flex; }
+  .tr-trader-card {
+    display: flex; align-items: flex-start; gap: 10px;
+    padding: 10px 12px;
+    border-bottom: 1px solid rgba(255,255,255,0.035);
+    transition: background 0.1s;
+  }
+  .tr-trader-card:hover { background: rgba(255,255,255,0.025); }
+  .tr-trader-card-rank  { font-size: 13px; min-width: 20px; flex-shrink: 0; margin-top: 1px; text-align: center; }
+  .tr-trader-card-body  { flex: 1; min-width: 0; display: flex; flex-direction: column; gap: 3px; }
+  .tr-trader-card-row   { display: flex; align-items: center; gap: 6px; flex-wrap: nowrap; }
+  .tr-trader-card-lbl   { font-size: 9px; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.05em; flex-shrink: 0; }
+  .tr-trader-card-val   { font-size: 11px; font-weight: 600; font-family: var(--font-mono); color: var(--text-secondary); white-space: nowrap; }
+  .tr-trader-card-val--pos { color: #26a69a; }
+  .tr-trader-card-val--neg { color: #ef5350; }
+  .tr-trader-card-sep   { width: 1px; height: 10px; background: var(--border-subtle); flex-shrink: 0; }
+  .tr-trader-card-addr  { display: flex; align-items: center; gap: 4px; margin-top: 1px; }
+}
+
+/* ================================================================
+   MY POSITION TAB
+   ================================================================ */
+.tr-pos-wrap { display: flex; flex-direction: column; flex: 1; min-height: 0; overflow: hidden; }
+
+.tr-pos-summary {
+  display: grid; grid-template-columns: repeat(4, 1fr);
+  gap: 1px; background: var(--border-subtle);
+  border-bottom: 1px solid var(--border-subtle); flex-shrink: 0;
+}
+.tr-pos-stat {
+  display: flex; flex-direction: column; gap: 3px;
+  padding: 10px 14px; background: var(--bg-base);
+}
+.tr-pos-stat-label { font-size: 9px; font-weight: 700; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.08em; }
+.tr-pos-stat-val   { font-size: 13px; font-weight: 700; font-family: var(--font-mono); color: var(--text-primary); }
+.tr-pos-stat-val--pos { color: #26a69a; }
+.tr-pos-stat-val--neg { color: #ef5350; }
+.tr-pos-stat-val--dim { color: var(--text-muted); }
+
+.tr-pos-pnl-pct     { font-size: 10px; font-weight: 700; padding: 1px 6px; border-radius: 10px; display: inline-block; margin-top: 2px; }
+.tr-pos-pnl-pct--pos { background: rgba(38,166,154,0.12); color: #26a69a; }
+.tr-pos-pnl-pct--neg { background: rgba(239,83,80,0.12);  color: #ef5350; }
+
+.tr-pos-section-header { display: flex; align-items: center; justify-content: space-between; padding: 6px 14px; border-bottom: 1px solid var(--border-subtle); flex-shrink: 0; }
+.tr-pos-section-title  { font-size: 10px; font-weight: 700; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.07em; }
+
+.tr-pos-empty       { display: flex; flex-direction: column; align-items: center; justify-content: center; flex: 1; gap: 8px; padding: 32px 16px; text-align: center; }
+.tr-pos-empty-title { font-size: 13px; font-weight: 600; color: var(--text-muted); margin: 0; }
+.tr-pos-empty-sub   { font-size: 11px; color: var(--text-muted); margin: 0; opacity: 0.6; }
+
+.tr-pos-history { flex: 1; overflow-y: auto; -ms-overflow-style: none; scrollbar-width: none; }
+.tr-pos-history::-webkit-scrollbar { display: none; }
+
+@media (max-width: 640px) {
+  .tr-pos-summary { grid-template-columns: repeat(2, 1fr); }
+  .tr-pos-stat    { padding: 8px 10px; }
+  .tr-pos-stat-val { font-size: 12px; }
+}
+
+/* ================================================================
+   WALLET DETAIL PANEL
+   ================================================================ */
+.wdp-overlay { position: fixed; inset: 0; z-index: 1000; pointer-events: none; }
+
+.wdp-panel {
+  position: fixed; top: 0; right: 0;
+  width: 320px; height: 100vh;
+  background: var(--bg-base);
+  border-left: 1px solid var(--border-default);
+  display: flex; flex-direction: column; pointer-events: all;
+  animation: wdp-slide-in 0.2s cubic-bezier(0.22,1,0.36,1);
+  z-index: 1001; overflow: hidden;
+}
+@keyframes wdp-slide-in {
+  from { transform: translateX(100%); opacity: 0; }
+  to   { transform: translateX(0);    opacity: 1; }
+}
+
+.wdp-header {
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 12px 14px; border-bottom: 1px solid var(--border-subtle);
+  flex-shrink: 0; gap: 8px;
+}
+.wdp-header-left  { display: flex; align-items: center; gap: 10px; min-width: 0; flex: 1; }
+.wdp-avatar { width: 34px; height: 34px; border-radius: 50%; background: var(--bg-elevated); border: 1px solid var(--border-subtle); display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+.wdp-header-info  { display: flex; flex-direction: column; gap: 4px; min-width: 0; }
+.wdp-header-addr  { display: flex; align-items: center; gap: 5px; }
+.wdp-addr-text    { font-family: var(--font-mono); font-size: 12px; font-weight: 600; color: var(--text-primary); }
+
+.wdp-badge      { display: inline-block; font-size: 9px; font-weight: 800; padding: 2px 8px; border-radius: 10px; letter-spacing: 0.04em; text-transform: uppercase; }
+.wdp-badge--hold { background: rgba(38,166,154,0.12); color: #26a69a; }
+.wdp-badge--exit { background: var(--bg-elevated); color: var(--text-muted); }
+.wdp-badge--none { background: var(--bg-elevated); color: var(--text-muted); }
+
+.wdp-close { background: none; border: none; cursor: pointer; padding: 6px; border-radius: 8px; color: var(--text-muted); display: flex; align-items: center; transition: color 0.15s, background 0.15s; flex-shrink: 0; }
+.wdp-close:hover { color: var(--text-primary); background: var(--bg-elevated); }
+
+.wdp-body { flex: 1; overflow-y: auto; -ms-overflow-style: none; scrollbar-width: none; }
+.wdp-body::-webkit-scrollbar { display: none; }
+
+.wdp-loading { display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 10px; padding: 48px 16px; color: var(--text-muted); font-size: 12px; }
+.wdp-spinner { width: 18px; height: 18px; border: 2px solid var(--border-subtle); border-top-color: #26a69a; border-radius: 50%; animation: wdp-spin 0.7s linear infinite; }
+@keyframes wdp-spin { to { transform: rotate(360deg); } }
+
+.wdp-section { padding: 12px 14px; border-bottom: 1px solid var(--border-subtle); }
+.wdp-section-title { font-size: 9px; font-weight: 800; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.1em; margin-bottom: 10px; display: flex; align-items: center; gap: 6px; }
+
+.wdp-pnl-grid  { display: grid; grid-template-columns: 1fr 1fr; gap: 7px; }
+.wdp-pnl-card  { background: var(--bg-elevated); border: 1px solid var(--border-subtle); border-radius: 10px; padding: 10px 12px; display: flex; flex-direction: column; gap: 3px; }
+.wdp-pnl-label { font-size: 9px; font-weight: 700; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.07em; }
+.wdp-pnl-val   { font-size: 14px; font-weight: 700; font-family: var(--font-mono); }
+.wdp-pnl-pct   { font-size: 10px; font-weight: 700; padding: 1px 6px; border-radius: 10px; display: inline-block; width: fit-content; }
+.wdp-pnl-pct--pos { background: rgba(38,166,154,0.12); color: #26a69a; }
+.wdp-pnl-pct--neg { background: rgba(239,83,80,0.12);  color: #ef5350; }
+
+.wdp-pos-grid  { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-bottom: 8px; }
+.wdp-pos-cell  { display: flex; flex-direction: column; gap: 2px; }
+.wdp-pos-label { font-size: 9px; font-weight: 700; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.07em; }
+.wdp-pos-val   { font-size: 13px; font-weight: 700; font-family: var(--font-mono); color: var(--text-primary); }
+
+.wdp-stat-row  { display: flex; align-items: flex-start; justify-content: space-between; gap: 8px; margin-bottom: 7px; }
+.wdp-stat-row:last-child { margin-bottom: 0; }
+.wdp-stat-label { font-size: 10px; color: var(--text-muted); flex-shrink: 0; padding-top: 1px; }
+.wdp-stat-value { font-size: 11px; font-weight: 600; font-family: var(--font-mono); color: var(--text-primary); text-align: right; }
+
+.wdp-progress-bg   { width: 100%; height: 4px; border-radius: 2px; background: var(--bg-elevated); overflow: hidden; }
+.wdp-progress-fill { height: 100%; border-radius: 2px; transition: width 0.5s ease; }
+
+.wdp-buysell-row  { display: flex; border: 1px solid var(--border-subtle); border-radius: 10px; overflow: hidden; margin-bottom: 8px; }
+.wdp-buysell-col  { flex: 1; padding: 10px 12px; display: flex; flex-direction: column; gap: 2px; }
+.wdp-buysell-col--buy  { background: rgba(38,166,154,0.05); }
+.wdp-buysell-col--sell { background: rgba(239,83,80,0.05); }
+.wdp-buysell-divider   { width: 1px; background: var(--border-subtle); flex-shrink: 0; }
+.wdp-buysell-label { font-size: 9px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.07em; color: var(--text-muted); }
+.wdp-buysell-col--buy  .wdp-buysell-label { color: #26a69a; }
+.wdp-buysell-col--sell .wdp-buysell-label { color: #ef5350; }
+.wdp-buysell-val { font-size: 14px; font-weight: 700; font-family: var(--font-mono); color: var(--text-primary); }
+.wdp-buysell-txs { font-size: 9px; color: var(--text-muted); }
+
+.wdp-volume-bar-wrap { display: flex; flex-direction: column; gap: 4px; }
+.wdp-volume-bar-bg   { width: 100%; height: 5px; border-radius: 3px; background: rgba(239,83,80,0.25); overflow: hidden; }
+.wdp-volume-bar-buy  { height: 100%; border-radius: 3px; background: #26a69a; transition: width 0.5s ease; }
+.wdp-volume-labels   { display: flex; justify-content: space-between; font-size: 9px; font-weight: 600; }
+
+.wdp-tx-count { background: var(--bg-elevated); border-radius: 4px; padding: 1px 5px; font-size: 9px; color: var(--text-muted); }
+.wdp-tx-list  { display: flex; flex-direction: column; gap: 1px; }
+.wdp-tx-row   { display: flex; align-items: center; gap: 6px; padding: 5px 2px; border-bottom: 1px solid rgba(255,255,255,0.03); }
+.wdp-tx-row:last-child { border-bottom: none; }
+.wdp-tx-row--buy  { border-left: 2px solid rgba(38,166,154,0.4); padding-left: 6px; margin-left: -2px; }
+.wdp-tx-row--sell { border-left: 2px solid rgba(239,83,80,0.4);  padding-left: 6px; margin-left: -2px; }
+.wdp-tx-badge     { font-size: 9px; font-weight: 800; width: 16px; height: 16px; border-radius: 4px; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+.wdp-tx-badge--buy  { background: rgba(38,166,154,0.15); color: #26a69a; }
+.wdp-tx-badge--sell { background: rgba(239,83,80,0.15);  color: #ef5350; }
+.wdp-tx-usd  { font-size: 11px; font-weight: 600; font-family: var(--font-mono); color: var(--text-secondary); }
+.wdp-tx-age  { font-size: 9px; color: var(--text-muted); flex-shrink: 0; }
+.wdp-tx-link { color: var(--text-muted); display: flex; align-items: center; text-decoration: none; flex-shrink: 0; transition: color 0.15s; }
+.wdp-tx-link:hover { color: var(--text-secondary); }
+
+.wdp-actions      { display: flex; gap: 8px; padding: 12px 14px; border-top: 1px solid var(--border-subtle); flex-shrink: 0; }
+.wdp-action-btn   { flex: 1; padding: 10px 8px; border-radius: 10px; font-size: 12px; font-weight: 700; cursor: pointer; border: none; text-align: center; text-decoration: none; display: flex; align-items: center; justify-content: center; transition: opacity 0.15s; }
+.wdp-action-btn:hover { opacity: 0.8; }
+.wdp-action-btn--secondary { background: var(--bg-elevated); color: var(--text-secondary); border: 1px solid var(--border-subtle); }
+.wdp-action-btn--primary   { background: var(--color-primary); color: #000; }
+
+/* ── WalletTooltip animation ──────────────────────────────────── */
+@keyframes tc-tt-drop {
+  from { opacity: 0; transform: translateX(-50%) translateY(-4px); }
+  to   { opacity: 1; transform: translateX(-50%) translateY(0); }
+}
+
+@media (max-width: 640px) {
+  .wdp-panel { width: 100%; height: 88vh; top: auto; bottom: 0; border-left: none; border-top: 1px solid var(--border-default); border-radius: 18px 18px 0 0; animation: wdp-sheet-up 0.22s cubic-bezier(0.22,1,0.36,1); }
+  @keyframes wdp-sheet-up { from { transform: translateY(100%); } to { transform: translateY(0); } }
+}
+
+/* ── TabDeployTokens mobile — hide STATUS column ─────────────── */
+.tr-deploy-mark { display: none; }
+
+@media (max-width: 640px) {
+  .tr-deploy-table .tr-table th:last-child,
+  .tr-deploy-table .tr-table td:last-child { display: none; }
+
+  .tr-deploy-mark {
+    display: inline-flex; align-items: center; justify-content: center;
+    width: 14px; height: 14px; border-radius: 4px;
+    font-size: 8px; font-weight: 800; line-height: 1; flex-shrink: 0;
+  }
+  .tr-deploy-mark--migrated { background: rgba(45,212,191,0.15); color: #2dd4bf; }
+  .tr-deploy-mark--bonding  { background: rgba(255,184,0,0.15);  color: var(--color-primary); }
+}

@@ -1,0 +1,719 @@
+/* ================================================================
+   export-wallet.css — SwanFi Secure Wallet Export Page
+   Modern dark-themed layout with glass cards, type selection,
+   sensitive data reveal, and 2FA verification modal.
+   ================================================================ */
+
+/* ---------- Page Root ---------- */
+.ew-page {
+  min-height: calc(100dvh - 116px);
+  padding: var(--space-5) var(--space-4) var(--space-16);
+  color: var(--text-primary);
+  font-family: var(--font-sans);
+  box-sizing: border-box;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.ew-container {
+  width: 100%;
+  max-width: 960px;
+  margin: 0 auto;
+}
+
+/* ---------- Empty State (Connect / 2FA Required) ---------- */
+.ew-empty {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-4);
+  padding: var(--space-16) var(--space-6);
+  text-align: center;
+  background: rgba(30, 30, 30, 0.6);
+  backdrop-filter: blur(16px);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-xl);
+  box-shadow: var(--shadow-md);
+  max-width: 440px;
+  margin: 0 auto;
+  animation: ew-fadeIn 0.4s ease;
+}
+
+.ew-empty svg {
+  color: var(--color-primary);
+  opacity: 0.8;
+}
+
+.ew-empty h2 {
+  font-size: 1.25rem;
+  font-weight: 700;
+  color: var(--text-primary);
+  margin: 0;
+}
+
+.ew-empty p {
+  font-size: 0.875rem;
+  color: var(--text-muted);
+  line-height: 1.6;
+  margin: 0;
+}
+
+/* ---------- Main Grid Layout ---------- */
+.ew-grid {
+  display: grid;
+  grid-template-columns: 1fr 320px;
+  gap: var(--space-4);
+  align-items: start;
+}
+
+/* ---------- Main Card (Left) ---------- */
+.ew-main-card {
+  background: rgba(30, 30, 30, 0.65);
+  backdrop-filter: blur(16px);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-xl);
+  padding: var(--space-6);
+  box-shadow: var(--shadow-md);
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-6);
+  transition: box-shadow 0.3s ease;
+}
+
+.ew-main-card:hover {
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.5);
+}
+
+/* ---------- Section ---------- */
+.ew-section {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+}
+
+.ew-section-top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: var(--space-2);
+}
+
+.ew-label {
+  font-size: 0.6875rem;
+  font-weight: 700;
+  color: var(--text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+}
+
+/* ---------- Wallet Selector ---------- */
+.ew-wallet-select {
+  position: relative;
+}
+
+.ew-wallet-btn {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 12px var(--space-4);
+  background: var(--bg-base);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-md);
+  color: var(--text-primary);
+  cursor: pointer;
+  transition: border-color 0.2s, box-shadow 0.2s;
+  font-family: var(--font-sans);
+}
+
+.ew-wallet-btn:hover {
+  border-color: var(--border-default);
+}
+
+.ew-wallet-btn:focus {
+  border-color: var(--color-primary);
+  box-shadow: 0 0 0 3px rgba(255, 184, 0, 0.1);
+}
+
+.ew-wallet-left {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+}
+
+.ew-wallet-icon {
+  width: 36px;
+  height: 36px;
+  border-radius: var(--radius-md);
+  background: var(--bg-elevated);
+  border: 1px solid var(--border-subtle);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  color: var(--color-primary);
+}
+
+.ew-wallet-info {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 2px;
+}
+
+.ew-wallet-info strong {
+  font-size: 0.875rem;
+  font-weight: 700;
+  color: var(--text-primary);
+}
+
+.ew-wallet-info span {
+  font-size: 0.6875rem;
+  font-weight: 500;
+  font-family: var(--font-mono);
+  color: var(--text-muted);
+}
+
+/* Wallet dropdown */
+.ew-wallet-dropdown {
+  position: absolute;
+  top: calc(100% + 6px);
+  left: 0;
+  right: 0;
+  z-index: 200;
+  background: rgba(30, 30, 30, 0.95);
+  backdrop-filter: blur(16px);
+  border: 1px solid var(--border-default);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-md);
+  padding: 4px;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  animation: ew-dropdown-in 0.15s cubic-bezier(0.34, 1.1, 0.64, 1);
+}
+
+@keyframes ew-dropdown-in {
+  from {
+    opacity: 0;
+    transform: translateY(-8px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.ew-wallet-option {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  padding: 10px var(--space-3);
+  border: none;
+  border-radius: var(--radius-md);
+  background: transparent;
+  cursor: pointer;
+  text-align: left;
+  transition: background 0.12s;
+  font-family: var(--font-sans);
+  color: var(--text-primary);
+}
+
+.ew-wallet-option:hover {
+  background: var(--bg-hover);
+}
+
+.ew-wallet-option > div {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.ew-wallet-option strong {
+  font-size: 0.8125rem;
+  font-weight: 700;
+}
+
+.ew-wallet-option span {
+  font-size: 0.625rem;
+  font-family: var(--font-mono);
+  color: var(--text-muted);
+}
+
+/* ---------- Export Type Selection ---------- */
+.ew-type-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--space-3);
+}
+
+.ew-type-card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--space-2);
+  padding: var(--space-5) var(--space-4);
+  background: var(--bg-base);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-lg);
+  cursor: pointer;
+  transition: border-color 0.2s, background 0.2s, box-shadow 0.2s, transform 0.15s;
+  text-align: center;
+  font-family: var(--font-sans);
+  color: var(--text-secondary);
+}
+
+.ew-type-card:hover {
+  border-color: var(--border-default);
+  background: var(--bg-elevated);
+  transform: translateY(-1px);
+}
+
+.ew-type-card.active {
+  border-color: var(--color-primary);
+  background: var(--bg-active);
+  box-shadow: 0 0 0 1px var(--color-primary);
+  color: var(--text-primary);
+}
+
+.ew-type-icon {
+  width: 40px;
+  height: 40px;
+  border-radius: var(--radius-md);
+  background: var(--bg-elevated);
+  border: 1px solid var(--border-subtle);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--color-primary);
+  transition: background 0.2s, border-color 0.2s;
+}
+
+.ew-type-card.active .ew-type-icon {
+  background: rgba(255, 184, 0, 0.1);
+  border-color: var(--border-default);
+}
+
+.ew-type-card strong {
+  font-size: 0.875rem;
+  font-weight: 700;
+  color: var(--text-primary);
+}
+
+.ew-type-card span {
+  font-size: 0.6875rem;
+  color: var(--text-muted);
+  line-height: 1.4;
+}
+
+/* ---------- Secret Box ---------- */
+.ew-secret-box {
+  background: var(--bg-base);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-md);
+  padding: var(--space-4);
+  min-height: 56px;
+  display: flex;
+  align-items: center;
+  word-break: break-all;
+  font-family: var(--font-mono);
+  font-size: 0.875rem;
+  color: var(--text-primary);
+  transition: border-color 0.2s;
+  position: relative;
+}
+
+.ew-secret-box:hover {
+  border-color: var(--border-default);
+}
+
+.ew-secret-placeholder {
+  color: var(--text-muted);
+  font-family: var(--font-sans);
+  font-size: 0.8125rem;
+  font-style: italic;
+}
+
+.ew-secret-actions {
+  display: flex;
+  gap: var(--space-2);
+  margin-top: var(--space-2);
+}
+
+.ew-copy-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 6px 14px;
+  border-radius: var(--radius-md);
+  border: 1px solid var(--border-subtle);
+  background: var(--bg-base);
+  color: var(--text-secondary);
+  font-size: 0.75rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.15s, border-color 0.15s, color 0.15s;
+}
+
+.ew-copy-btn:hover {
+  background: var(--bg-hover);
+  border-color: var(--border-default);
+  color: var(--text-primary);
+}
+
+.ew-reveal-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 4px 10px;
+  border-radius: var(--radius-md);
+  border: 1px solid var(--border-subtle);
+  background: var(--bg-base);
+  color: var(--text-muted);
+  font-size: 0.6875rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.15s, border-color 0.15s, color 0.15s;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+
+.ew-reveal-btn:hover {
+  background: var(--bg-hover);
+  border-color: var(--border-default);
+  color: var(--text-primary);
+}
+
+/* ---------- Error Message ---------- */
+.ew-error {
+  padding: var(--space-3) var(--space-4);
+  background: rgba(239, 68, 68, 0.08);
+  border: 1px solid rgba(239, 68, 68, 0.25);
+  border-radius: var(--radius-md);
+  font-size: 0.8125rem;
+  color: #ef5350;
+  line-height: 1.5;
+}
+
+/* ---------- Primary Button ---------- */
+.ew-primary-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-2);
+  padding: 14px var(--space-6);
+  background: linear-gradient(135deg, var(--swan-yellow) 0%, var(--swan-orange) 100%);
+  border: none;
+  border-radius: var(--radius-lg);
+  font-size: 0.9375rem;
+  font-weight: 700;
+  color: var(--swan-black);
+  cursor: pointer;
+  transition: background 0.2s, transform 0.15s, box-shadow 0.2s;
+  box-shadow: 0 4px 16px rgba(255, 184, 0, 0.3);
+  width: 100%;
+  letter-spacing: 0.02em;
+}
+
+.ew-primary-btn:hover {
+  background: linear-gradient(135deg, var(--swan-yellow-light) 0%, var(--swan-orange) 100%);
+  transform: translateY(-1px);
+  box-shadow: 0 6px 24px rgba(255, 184, 0, 0.45);
+}
+
+.ew-primary-btn:active {
+  transform: translateY(0);
+  box-shadow: 0 2px 8px rgba(255, 184, 0, 0.2);
+}
+
+.ew-primary-btn:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+  transform: none;
+  box-shadow: 0 2px 8px rgba(255, 184, 0, 0.15);
+}
+
+.ew-primary-btn:disabled:hover {
+  transform: none;
+  box-shadow: 0 2px 8px rgba(255, 184, 0, 0.15);
+}
+
+/* Export specific button (full width) */
+.ew-export-btn {
+  padding: 16px var(--space-6);
+  font-size: 1rem;
+}
+
+/* ---------- Sidebar (Right) ---------- */
+.ew-sidebar {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-4);
+  position: sticky;
+  top: var(--space-5);
+}
+
+/* Warning card */
+.ew-warning-card,
+.ew-security-card {
+  background: rgba(30, 30, 30, 0.55);
+  backdrop-filter: blur(12px);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-xl);
+  padding: var(--space-5);
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+  box-shadow: var(--shadow-sm);
+}
+
+.ew-warning-title {
+  font-size: 0.6875rem;
+  font-weight: 700;
+  color: var(--color-warning);
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+}
+
+.ew-warning-card ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+}
+
+.ew-warning-card li {
+  font-size: 0.75rem;
+  color: var(--text-secondary);
+  line-height: 1.6;
+  padding-left: var(--space-4);
+  position: relative;
+}
+
+.ew-warning-card li::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 8px;
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+  background: var(--color-warning);
+  opacity: 0.6;
+}
+
+/* Security status items */
+.ew-security-item {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--space-3);
+}
+
+.ew-security-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: var(--color-success);
+  margin-top: 4px;
+  flex-shrink: 0;
+  box-shadow: 0 0 6px rgba(34, 197, 94, 0.4);
+}
+
+.ew-security-item > div:last-child {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.ew-security-item strong {
+  font-size: 0.8125rem;
+  font-weight: 700;
+  color: var(--text-primary);
+}
+
+.ew-security-item span {
+  font-size: 0.6875rem;
+  color: var(--text-muted);
+  line-height: 1.5;
+}
+
+/* ---------- Modal (2FA Verification) ---------- */
+.ew-backdrop {
+  position: fixed;
+  inset: 0;
+  z-index: 1000;
+  background: rgba(0, 0, 0, 0.7);
+  backdrop-filter: blur(4px);
+  animation: ew-fadeIn 0.2s ease;
+}
+
+.ew-modal {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 1100;
+  width: 90%;
+  max-width: 440px;
+  background: rgba(30, 30, 30, 0.95);
+  backdrop-filter: blur(20px);
+  border: 1px solid var(--border-default);
+  border-radius: var(--radius-xl);
+  box-shadow: 0 16px 48px rgba(0, 0, 0, 0.6);
+  padding: var(--space-8) var(--space-6);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--space-5);
+  animation: ew-modal-in 0.25s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+@keyframes ew-modal-in {
+  from {
+    opacity: 0;
+    transform: translate(-50%, -50%) scale(0.92);
+  }
+  to {
+    opacity: 1;
+    transform: translate(-50%, -50%) scale(1);
+  }
+}
+
+@keyframes ew-fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+.ew-modal-icon {
+  width: 56px;
+  height: 56px;
+  border-radius: 50%;
+  background: var(--bg-active);
+  border: 1px solid var(--border-default);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--color-primary);
+}
+
+.ew-modal-header {
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+}
+
+.ew-modal-header h2 {
+  font-size: 1.125rem;
+  font-weight: 700;
+  color: var(--text-primary);
+  margin: 0;
+}
+
+.ew-modal-header p {
+  font-size: 0.8125rem;
+  color: var(--text-muted);
+  line-height: 1.6;
+  margin: 0;
+}
+
+.ew-verify-card {
+  width: 100%;
+  background: var(--bg-base);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-md);
+  padding: var(--space-3) var(--space-4);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.ew-verify-card span {
+  font-size: 0.75rem;
+  color: var(--text-muted);
+}
+
+.ew-verify-card strong {
+  font-size: 0.875rem;
+  font-weight: 700;
+  color: var(--text-primary);
+}
+
+/* OTP input (similar to withdraw) */
+.ew-otp-input {
+  width: 100%;
+  padding: 14px var(--space-4);
+  background: var(--bg-base);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-md);
+  color: var(--text-primary);
+  font-size: 1.5rem;
+  font-family: var(--font-mono);
+  letter-spacing: 0.5em;
+  text-align: center;
+  outline: none;
+  transition: border-color 0.2s, box-shadow 0.2s;
+  box-sizing: border-box;
+}
+
+.ew-otp-input::placeholder {
+  color: var(--text-muted);
+  letter-spacing: 0.3em;
+}
+
+.ew-otp-input:focus {
+  border-color: var(--color-primary);
+  box-shadow: 0 0 0 3px rgba(255, 184, 0, 0.1);
+}
+
+/* ---------- Responsive ---------- */
+@media (max-width: 768px) {
+  .ew-grid {
+    grid-template-columns: 1fr;
+    gap: var(--space-4);
+  }
+
+  .ew-sidebar {
+    position: static;
+    order: -1;
+  }
+
+  .ew-main-card {
+    padding: var(--space-4);
+  }
+
+  .ew-type-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .ew-modal {
+    padding: var(--space-6) var(--space-4);
+    max-width: 95%;
+  }
+
+  .ew-page {
+    padding: var(--space-3) var(--space-2) var(--space-10);
+  }
+}
+
+@media (max-width: 480px) {
+  .ew-primary-btn {
+    font-size: 0.875rem;
+    padding: 12px var(--space-4);
+  }
+
+  .ew-wallet-info strong,
+  .ew-wallet-info span {
+    font-size: 0.75rem;
+  }
+}

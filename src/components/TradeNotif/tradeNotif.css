@@ -1,0 +1,286 @@
+/* ================================================================
+   tradeNotif.css — Premium notification styling
+   ================================================================ */
+
+@keyframes tn-slide-in {
+  from {
+    transform: translateY(-100%) scale(0.95);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0) scale(1);
+    opacity: 1;
+  }
+}
+
+@keyframes tn-progress-shrink {
+  from { transform: scaleX(1); }
+  to   { transform: scaleX(0); }
+}
+
+@keyframes tn-spin {
+  from { transform: rotate(0deg); }
+  to   { transform: rotate(360deg); }
+}
+
+/* ── Wrapper ──────────────────────────────────────────────────── */
+.tn-wrap {
+  position: fixed;
+  top: 20px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 9999;
+  width: calc(100% - 32px);
+  max-width: 440px;
+  border-radius: 20px;
+  overflow: hidden;
+  animation: tn-slide-in 0.4s cubic-bezier(0.34, 1.2, 0.64, 1);
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+  box-sizing: border-box;
+  backdrop-filter: blur(12px);
+}
+
+/* ── Reward variant ───────────────────────────────────────────── */
+.tn-reward {
+  background: linear-gradient(135deg, rgba(18, 18, 22, 0.98) 0%, rgba(30, 25, 12, 0.98) 100%);
+  border: 1px solid rgba(251, 191, 36, 0.35);
+  box-shadow:
+    0 12px 40px rgba(0, 0, 0, 0.5),
+    0 0 0 1px rgba(251, 191, 36, 0.1),
+    inset 0 1px 0 rgba(251, 191, 36, 0.08);
+}
+
+/* ── Error variant ────────────────────────────────────────────── */
+.tn-error {
+  background: linear-gradient(135deg, rgba(18, 18, 22, 0.98) 0%, rgba(30, 12, 12, 0.98) 100%);
+  border: 1px solid rgba(239, 68, 68, 0.35);
+  box-shadow:
+    0 12px 40px rgba(0, 0, 0, 0.5),
+    0 0 0 1px rgba(239, 68, 68, 0.1),
+    inset 0 1px 0 rgba(239, 68, 68, 0.08);
+}
+
+/* ── Bar (clickable area) ────────────────────────────────────── */
+.tn-bar {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding: 16px 18px 14px;
+  cursor: pointer;
+  user-select: none;
+  transition: background 0.2s;
+}
+
+.tn-bar:hover {
+  background: rgba(255, 255, 255, 0.02);
+}
+
+/* ── Icon container ──────────────────────────────────────────── */
+.tn-icon {
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 44px;
+  height: 44px;
+  border-radius: 14px;
+  background: rgba(255, 255, 255, 0.03);
+  transition: all 0.2s;
+}
+
+.tn-reward .tn-icon {
+  background: rgba(251, 191, 36, 0.08);
+  border: 1px solid rgba(251, 191, 36, 0.15);
+}
+
+.tn-error .tn-icon {
+  background: rgba(239, 68, 68, 0.08);
+  border: 1px solid rgba(239, 68, 68, 0.15);
+}
+
+/* Rotating BNB icon */
+.tn-bnb-icon {
+  width: 28px;
+  height: 28px;
+  object-fit: contain;
+  animation: tn-spin 3s linear infinite;
+  filter: drop-shadow(0 0 4px rgba(251, 191, 36, 0.5));
+}
+
+/* ── Content ──────────────────────────────────────────────────── */
+.tn-content {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.tn-title {
+  display: flex;
+  align-items: baseline;
+  gap: 6px;
+  flex-wrap: wrap;
+  line-height: 1.2;
+}
+
+.tn-amount {
+  font-size: 20px;
+  font-weight: 800;
+  color: #fbbf24;
+  letter-spacing: -0.3px;
+  font-variant-numeric: tabular-nums;
+  font-family: 'JetBrains Mono', 'Fira Code', monospace;
+}
+
+.tn-unit {
+  font-size: 13px;
+  font-weight: 700;
+  color: rgba(251, 191, 36, 0.7);
+  text-transform: uppercase;
+}
+
+.tn-title-err {
+  font-size: 15px;
+  font-weight: 700;
+  color: #fca5a5;
+}
+
+.tn-sub {
+  font-size: 12px;
+  color: rgba(255, 255, 255, 0.45);
+  font-weight: 500;
+  line-height: 1.4;
+}
+
+.tn-sub-err {
+  color: rgba(252, 165, 165, 0.6);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+/* ── Actions (right side) ─────────────────────────────────────── */
+.tn-actions {
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.tn-action-btn {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 7px 14px;
+  border-radius: 40px;
+  border: 1px solid rgba(251, 191, 36, 0.4);
+  background: rgba(251, 191, 36, 0.12);
+  color: #fbbf24;
+  font-size: 12px;
+  font-weight: 700;
+  font-family: inherit;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  white-space: nowrap;
+}
+
+.tn-action-btn:hover {
+  background: rgba(251, 191, 36, 0.22);
+  border-color: rgba(251, 191, 36, 0.7);
+  transform: scale(1.02);
+}
+
+/* ── Close button ─────────────────────────────────────────────── */
+.tn-close {
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 32px;
+  border-radius: 40px;
+  border: none;
+  background: rgba(255, 255, 255, 0.05);
+  color: #71717a;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.tn-close:hover {
+  background: rgba(255, 255, 255, 0.1);
+  color: #a1a1aa;
+  transform: scale(1.05);
+}
+
+/* ── Progress bar ─────────────────────────────────────────────── */
+.tn-progress {
+  height: 2px;
+  background: rgba(255, 255, 255, 0.06);
+}
+
+.tn-progress-bar {
+  height: 100%;
+  transform-origin: left;
+  animation: tn-progress-shrink linear forwards;
+}
+
+.tn-prog-reward {
+  background: linear-gradient(90deg, #fbbf24, rgba(251, 191, 36, 0.4));
+  box-shadow: 0 0 6px rgba(251, 191, 36, 0.3);
+}
+
+.tn-prog-error {
+  background: linear-gradient(90deg, #ef4444, rgba(239, 68, 68, 0.4));
+}
+
+/* ── Mobile responsiveness ────────────────────────────────────── */
+@media (max-width: 640px) {
+  .tn-wrap {
+    top: 12px;
+    width: calc(100% - 20px);
+    border-radius: 16px;
+  }
+  .tn-bar {
+    padding: 12px 14px 10px;
+    gap: 10px;
+  }
+  .tn-icon {
+    width: 38px;
+    height: 38px;
+  }
+  .tn-bnb-icon {
+    width: 24px;
+    height: 24px;
+  }
+  .tn-amount {
+    font-size: 17px;
+  }
+  .tn-unit {
+    font-size: 11px;
+  }
+  .tn-title-err {
+    font-size: 13px;
+  }
+  .tn-sub {
+    font-size: 10px;
+  }
+  .tn-action-btn {
+    padding: 5px 12px;
+    font-size: 11px;
+  }
+  .tn-close {
+    width: 28px;
+    height: 28px;
+  }
+}
+
+/* Registration variant */
+.tn-registration {
+  background: linear-gradient(135deg, rgba(18, 18, 22, 0.98) 0%, rgba(12, 30, 25, 0.98) 100%);
+  border: 1px solid rgba(56, 189, 248, 0.35);
+  box-shadow: 0 12px 40px rgba(0, 0, 0, 0.5), 0 0 0 1px rgba(56, 189, 248, 0.1), inset 0 1px 0 rgba(56, 189, 248, 0.08);
+}
+.tn-prog-registration {
+  background: linear-gradient(90deg, #38bdf8, rgba(56, 189, 248, 0.4));
+}

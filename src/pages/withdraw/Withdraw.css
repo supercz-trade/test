@@ -1,0 +1,913 @@
+/* ================================================================
+   Withdraw.css — SwanFi Secure BNB Withdrawal Page
+   Modern dark-themed layout with glass cards & 2FA security flow
+   ================================================================ */
+
+/* ---------- Page Root ---------- */
+.wd-page {
+  min-height: calc(100dvh - 116px);
+  padding: var(--space-5) var(--space-4) var(--space-16);
+  color: var(--text-primary);
+  font-family: var(--font-sans);
+  box-sizing: border-box;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.wd-container {
+  width: 100%;
+  max-width: 960px;
+  margin: 0 auto;
+}
+
+/* ---------- Empty State (Connect / 2FA Required) ---------- */
+.wd-empty {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-4);
+  padding: var(--space-16) var(--space-6);
+  text-align: center;
+  background: rgba(30, 30, 30, 0.6);
+  backdrop-filter: blur(16px);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-xl);
+  box-shadow: var(--shadow-md);
+  max-width: 440px;
+  margin: 0 auto;
+  animation: wd-fadeIn 0.4s ease;
+}
+
+.wd-empty svg {
+  color: var(--color-primary);
+  opacity: 0.8;
+}
+
+.wd-empty h2 {
+  font-size: 1.25rem;
+  font-weight: 700;
+  color: var(--text-primary);
+  margin: 0;
+}
+
+.wd-empty p {
+  font-size: 0.875rem;
+  color: var(--text-muted);
+  line-height: 1.6;
+  margin: 0;
+}
+
+/* ---------- Main Grid Layout ---------- */
+.wd-grid {
+  display: grid;
+  grid-template-columns: 1fr 320px;
+  gap: var(--space-4);
+  align-items: start;
+}
+
+/* ---------- Main Card (Left) ---------- */
+.wd-main-card {
+  background: rgba(30, 30, 30, 0.65);
+  backdrop-filter: blur(16px);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-xl);
+  padding: var(--space-6);
+  box-shadow: var(--shadow-md);
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-5);
+  transition: box-shadow 0.3s ease;
+}
+
+.wd-main-card:hover {
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.5);
+}
+
+/* Card header */
+.wd-card-header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: var(--space-4);
+}
+
+.wd-card-header h2 {
+  font-size: 1.25rem;
+  font-weight: 700;
+  color: var(--text-primary);
+  margin: 0 0 4px 0;
+}
+
+.wd-card-header p {
+  font-size: 0.8125rem;
+  color: var(--text-muted);
+  line-height: 1.5;
+  margin: 0;
+}
+
+/* ---------- Modern Section (Wallet / Recipient / Amount) ---------- */
+.wd-modern-section {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+}
+
+.wd-modern-top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: var(--space-2);
+}
+
+.wd-modern-label {
+  font-size: 0.6875rem;
+  font-weight: 700;
+  color: var(--text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+}
+
+.wd-modern-balance {
+  font-size: 0.75rem;
+  color: var(--text-muted);
+}
+
+.wd-modern-balance strong {
+  color: var(--text-primary);
+  font-weight: 700;
+  margin-left: 4px;
+}
+
+/* ---------- Modern Input ---------- */
+.wd-modern-input {
+  width: 100%;
+  padding: 12px var(--space-4);
+  background: var(--bg-base);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-md);
+  color: var(--text-primary);
+  font-size: 0.875rem;
+  font-family: var(--font-mono);
+  outline: none;
+  transition: border-color 0.2s, box-shadow 0.2s;
+  box-sizing: border-box;
+}
+
+.wd-modern-input::placeholder {
+  color: var(--text-muted);
+  font-family: var(--font-sans);
+}
+
+.wd-modern-input:focus {
+  border-color: var(--color-primary);
+  box-shadow: 0 0 0 3px rgba(255, 184, 0, 0.1);
+}
+
+/* Amount input with MAX button & unit */
+.wd-modern-amount {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+}
+
+.wd-modern-input-amount {
+  flex: 1;
+  min-width: 0;
+  -moz-appearance: textfield;
+}
+
+.wd-modern-input-amount::-webkit-inner-spin-button,
+.wd-modern-input-amount::-webkit-outer-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+.wd-max-btn {
+  flex-shrink: 0;
+  padding: 8px 14px;
+  background: var(--bg-active);
+  border: 1px solid var(--border-default);
+  border-radius: var(--radius-md);
+  color: var(--color-primary);
+  font-size: 0.75rem;
+  font-weight: 800;
+  cursor: pointer;
+  letter-spacing: 0.04em;
+  transition: background 0.15s, transform 0.1s;
+}
+
+.wd-max-btn:hover {
+  background: rgba(255, 184, 0, 0.2);
+  transform: scale(1.03);
+}
+
+.wd-max-btn:active {
+  transform: scale(0.97);
+}
+
+.wd-modern-unit {
+  font-size: 0.875rem;
+  font-weight: 700;
+  color: var(--text-secondary);
+  flex-shrink: 0;
+}
+
+/* ---------- Wallet Selector ---------- */
+.wd-wallet-select {
+  position: relative;
+}
+
+.wd-wallet-btn {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 12px var(--space-4);
+  background: var(--bg-base);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-md);
+  color: var(--text-primary);
+  cursor: pointer;
+  transition: border-color 0.2s, box-shadow 0.2s;
+  font-family: var(--font-sans);
+}
+
+.wd-wallet-btn:hover {
+  border-color: var(--border-default);
+}
+
+.wd-wallet-btn:focus {
+  border-color: var(--color-primary);
+  box-shadow: 0 0 0 3px rgba(255, 184, 0, 0.1);
+}
+
+.wd-wallet-left {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+}
+
+.wd-wallet-icon {
+  width: 36px;
+  height: 36px;
+  border-radius: var(--radius-md);
+  background: var(--bg-elevated);
+  border: 1px solid var(--border-subtle);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  color: var(--color-primary);
+}
+
+.wd-wallet-info {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 2px;
+}
+
+.wd-wallet-info strong {
+  font-size: 0.875rem;
+  font-weight: 700;
+  color: var(--text-primary);
+}
+
+.wd-wallet-info span {
+  font-size: 0.6875rem;
+  font-weight: 500;
+  font-family: var(--font-mono);
+  color: var(--text-muted);
+}
+
+/* Wallet dropdown */
+.wd-wallet-dropdown {
+  position: absolute;
+  top: calc(100% + 6px);
+  left: 0;
+  right: 0;
+  z-index: 200;
+  background: rgba(30, 30, 30, 0.95);
+  backdrop-filter: blur(16px);
+  border: 1px solid var(--border-default);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-md);
+  padding: 4px;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  animation: wd-dropdown-in 0.15s cubic-bezier(0.34, 1.1, 0.64, 1);
+}
+
+@keyframes wd-dropdown-in {
+  from {
+    opacity: 0;
+    transform: translateY(-8px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.wd-wallet-option {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  padding: 10px var(--space-3);
+  border: none;
+  border-radius: var(--radius-md);
+  background: transparent;
+  cursor: pointer;
+  text-align: left;
+  transition: background 0.12s;
+  font-family: var(--font-sans);
+  color: var(--text-primary);
+}
+
+.wd-wallet-option:hover {
+  background: var(--bg-hover);
+}
+
+.wd-wallet-option > div {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.wd-wallet-option strong {
+  font-size: 0.8125rem;
+  font-weight: 700;
+}
+
+.wd-wallet-option span {
+  font-size: 0.625rem;
+  font-family: var(--font-mono);
+  color: var(--text-muted);
+}
+
+.wd-wallet-option svg {
+  color: var(--color-success);
+  flex-shrink: 0;
+}
+
+/* ---------- Review Card ---------- */
+.wd-review-card {
+  background: var(--bg-base);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-lg);
+  padding: var(--space-4);
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.wd-review-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  font-size: 0.8125rem;
+  color: var(--text-secondary);
+}
+
+.wd-review-row strong {
+  font-weight: 700;
+  color: var(--text-primary);
+  font-family: var(--font-mono);
+}
+
+.wd-review-final {
+  padding-top: 10px;
+  border-top: 1px solid var(--border-subtle);
+  font-weight: 600;
+  color: var(--text-primary);
+}
+
+.wd-review-final strong {
+  color: var(--color-primary);
+  font-size: 0.9375rem;
+}
+
+/* ---------- Error Message ---------- */
+.wd-error {
+  padding: var(--space-3) var(--space-4);
+  background: rgba(239, 68, 68, 0.08);
+  border: 1px solid rgba(239, 68, 68, 0.25);
+  border-radius: var(--radius-md);
+  font-size: 0.8125rem;
+  color: #ef5350;
+  line-height: 1.5;
+}
+
+/* ---------- Submit Button ---------- */
+.wd-submit-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-2);
+  padding: 14px var(--space-6);
+  background: linear-gradient(135deg, var(--swan-yellow) 0%, var(--swan-orange) 100%);
+  border: none;
+  border-radius: var(--radius-lg);
+  font-size: 0.9375rem;
+  font-weight: 700;
+  color: var(--swan-black);
+  cursor: pointer;
+  transition: background 0.2s, transform 0.15s, box-shadow 0.2s;
+  box-shadow: 0 4px 16px rgba(255, 184, 0, 0.3);
+  width: 100%;
+  letter-spacing: 0.02em;
+}
+
+.wd-submit-btn:hover {
+  background: linear-gradient(135deg, var(--swan-yellow-light) 0%, var(--swan-orange) 100%);
+  transform: translateY(-1px);
+  box-shadow: 0 6px 24px rgba(255, 184, 0, 0.45);
+}
+
+.wd-submit-btn:active {
+  transform: translateY(0);
+  box-shadow: 0 2px 8px rgba(255, 184, 0, 0.2);
+}
+
+.wd-submit-btn:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+  transform: none;
+  box-shadow: 0 2px 8px rgba(255, 184, 0, 0.15);
+}
+
+.wd-submit-btn:disabled:hover {
+  transform: none;
+  box-shadow: 0 2px 8px rgba(255, 184, 0, 0.15);
+}
+
+/* Large variant */
+.wd-submit-btn-large {
+  padding: 16px var(--space-6);
+  font-size: 1rem;
+}
+
+/* ---------- Sidebar (Right) ---------- */
+.wd-sidebar {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-4);
+  position: sticky;
+  top: var(--space-5);
+}
+
+/* Side card */
+.wd-side-card {
+  background: rgba(30, 30, 30, 0.55);
+  backdrop-filter: blur(12px);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-xl);
+  padding: var(--space-5);
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-4);
+  box-shadow: var(--shadow-sm);
+}
+
+.wd-side-title {
+  font-size: 0.6875rem;
+  font-weight: 700;
+  color: var(--text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+}
+
+/* Security list */
+.wd-security-list {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+}
+
+.wd-security-item {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--space-3);
+}
+
+.wd-security-icon {
+  width: 32px;
+  height: 32px;
+  border-radius: var(--radius-md);
+  background: var(--bg-active);
+  border: 1px solid var(--border-default);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  color: var(--color-primary);
+}
+
+.wd-security-item > div:last-child {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.wd-security-item strong {
+  font-size: 0.8125rem;
+  font-weight: 700;
+  color: var(--text-primary);
+}
+
+.wd-security-item span {
+  font-size: 0.6875rem;
+  color: var(--text-muted);
+  line-height: 1.5;
+}
+
+/* Warning card */
+.wd-warning-card {
+  background: rgba(255, 152, 0, 0.05);
+  border: 1px solid rgba(255, 152, 0, 0.15);
+  border-radius: var(--radius-xl);
+  padding: var(--space-5);
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+}
+
+.wd-warning-title {
+  font-size: 0.6875rem;
+  font-weight: 700;
+  color: var(--color-warning);
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+}
+
+.wd-warning-card ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+}
+
+.wd-warning-card li {
+  font-size: 0.75rem;
+  color: var(--text-secondary);
+  line-height: 1.6;
+  padding-left: var(--space-4);
+  position: relative;
+}
+
+.wd-warning-card li::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 8px;
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+  background: var(--color-warning);
+  opacity: 0.6;
+}
+
+/* ---------- Modal (2FA & Status) ---------- */
+.wd-backdrop {
+  position: fixed;
+  inset: 0;
+  z-index: 1000;
+  background: rgba(0, 0, 0, 0.7);
+  backdrop-filter: blur(4px);
+  animation: wd-fadeIn 0.2s ease;
+}
+
+.wd-modal {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 1100;
+  width: 90%;
+  max-width: 440px;
+  background: rgba(30, 30, 30, 0.95);
+  backdrop-filter: blur(20px);
+  border: 1px solid var(--border-default);
+  border-radius: var(--radius-xl);
+  box-shadow: 0 16px 48px rgba(0, 0, 0, 0.6);
+  padding: var(--space-8) var(--space-6);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--space-5);
+  animation: wd-modal-in 0.25s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+@keyframes wd-modal-in {
+  from {
+    opacity: 0;
+    transform: translate(-50%, -50%) scale(0.92);
+  }
+  to {
+    opacity: 1;
+    transform: translate(-50%, -50%) scale(1);
+  }
+}
+
+@keyframes wd-fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+/* Modal close button */
+.wd-modal-close {
+  position: absolute;
+  top: var(--space-4);
+  right: var(--space-4);
+  width: 32px;
+  height: 32px;
+  border-radius: var(--radius-full);
+  border: 1px solid var(--border-subtle);
+  background: var(--bg-surface);
+  color: var(--text-muted);
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: color 0.15s, background 0.15s, border-color 0.15s;
+}
+
+.wd-modal-close:hover {
+  color: var(--text-primary);
+  background: var(--bg-hover);
+  border-color: var(--border-default);
+}
+
+/* Modal icon */
+.wd-modal-icon {
+  width: 56px;
+  height: 56px;
+  border-radius: 50%;
+  background: var(--bg-active);
+  border: 1px solid var(--border-default);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--color-primary);
+}
+
+/* Modal header */
+.wd-modal-header {
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+}
+
+.wd-modal-header h2 {
+  font-size: 1.125rem;
+  font-weight: 700;
+  color: var(--text-primary);
+  margin: 0;
+}
+
+.wd-modal-header p {
+  font-size: 0.8125rem;
+  color: var(--text-muted);
+  line-height: 1.6;
+  margin: 0;
+}
+
+/* Confirm card inside modal */
+.wd-confirm-card {
+  width: 100%;
+  background: var(--bg-base);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-lg);
+  padding: var(--space-4);
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+}
+
+.wd-confirm-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  font-size: 0.8125rem;
+  color: var(--text-secondary);
+}
+
+.wd-confirm-row strong {
+  font-weight: 700;
+  color: var(--text-primary);
+  font-family: var(--font-mono);
+}
+
+/* OTP input */
+.wd-otp-wrap {
+  width: 100%;
+  position: relative;
+}
+
+.wd-otp-input {
+  width: 100%;
+  padding: 14px var(--space-4);
+  background: var(--bg-base);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-md);
+  color: transparent;
+  caret-color: var(--color-primary);
+  font-size: 1.5rem;
+  font-family: var(--font-mono);
+  letter-spacing: 0.6em;
+  text-align: center;
+  outline: none;
+  transition: border-color 0.2s, box-shadow 0.2s;
+  box-sizing: border-box;
+  position: relative;
+  z-index: 2;
+}
+
+.wd-otp-input:focus {
+  border-color: var(--color-primary);
+  box-shadow: 0 0 0 3px rgba(255, 184, 0, 0.1);
+}
+
+.wd-otp-input::placeholder {
+  color: var(--text-muted);
+  letter-spacing: 0.3em;
+}
+
+/* OTP dots overlay */
+.wd-otp-dots {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  display: flex;
+  gap: 12px;
+  z-index: 1;
+  pointer-events: none;
+}
+
+.wd-otp-dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: var(--border-subtle);
+  transition: background 0.15s;
+}
+
+.wd-otp-dot.filled {
+  background: var(--color-primary);
+  box-shadow: 0 0 8px rgba(255, 184, 0, 0.5);
+}
+
+/* Status icon (animated) */
+.wd-status-icon {
+  width: 56px;
+  height: 56px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--text-muted);
+  background: var(--bg-elevated);
+  border: 2px solid var(--border-subtle);
+}
+
+.wd-status-icon.success {
+  color: var(--color-success);
+  background: rgba(34, 197, 94, 0.1);
+  border-color: rgba(34, 197, 94, 0.3);
+}
+
+.wd-status-icon.failed {
+  color: var(--color-danger);
+  background: rgba(255, 77, 77, 0.1);
+  border-color: rgba(255, 77, 77, 0.3);
+}
+
+/* Transaction hash card */
+.wd-tx-card {
+  width: 100%;
+  background: var(--bg-base);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-lg);
+  padding: var(--space-3) var(--space-4);
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+}
+
+.wd-tx-label {
+  font-size: 0.625rem;
+  font-weight: 700;
+  color: var(--text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+}
+
+.wd-tx-row {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  flex-wrap: wrap;
+}
+
+.wd-tx-hash {
+  font-size: 0.75rem;
+  font-family: var(--font-mono);
+  color: var(--text-primary);
+  font-weight: 600;
+}
+
+.wd-copy-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 4px;
+  border-radius: var(--radius-sm);
+  border: none;
+  background: transparent;
+  color: var(--text-muted);
+  cursor: pointer;
+  transition: color 0.15s;
+}
+
+.wd-copy-btn:hover {
+  color: var(--text-primary);
+}
+
+.wd-explorer-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  font-size: 0.6875rem;
+  font-weight: 600;
+  color: var(--color-primary);
+  text-decoration: none;
+  padding: 4px 8px;
+  border-radius: var(--radius-md);
+  border: 1px solid rgba(255, 184, 0, 0.2);
+  background: rgba(255, 184, 0, 0.06);
+  transition: background 0.15s;
+  margin-left: auto;
+}
+
+.wd-explorer-btn:hover {
+  background: rgba(255, 184, 0, 0.12);
+}
+
+/* ---------- Responsive ---------- */
+@media (max-width: 768px) {
+  .wd-grid {
+    grid-template-columns: 1fr;
+    gap: var(--space-4);
+  }
+
+  .wd-sidebar {
+    position: static;
+    order: -1;
+  }
+
+  .wd-main-card {
+    padding: var(--space-4);
+  }
+
+  .wd-modal {
+    padding: var(--space-6) var(--space-4);
+    max-width: 95%;
+  }
+
+  .wd-page {
+    padding: var(--space-3) var(--space-2) var(--space-10);
+  }
+}
+
+@media (max-width: 480px) {
+  .wd-card-header {
+    flex-direction: column;
+  }
+
+  .wd-modern-amount {
+    flex-wrap: wrap;
+  }
+
+  .wd-modern-input-amount {
+    width: 100%;
+    flex: auto;
+  }
+
+  .wd-submit-btn {
+    font-size: 0.875rem;
+    padding: 12px var(--space-4);
+  }
+}
